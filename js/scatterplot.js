@@ -20,6 +20,24 @@ d3.csv("data/scatter.csv").then((data) => {
 
   const maxY = d3.max(data, (d) => d.score);
 
+  const mouseover3 = function (event, d) {
+    tooltip1
+      .html("Day: " + d.day + "<br> Score: " + d.score + "<br>") //adds html to tooltip element with d.name and d.score
+      .style("opacity", 1); //makes tooltip visible by setting opacity to 1
+  };
+
+  // Moves the tooltip with the mouse
+  const mousemove3 = function (event, d) {
+    tooltip1
+      .style("left", event.pageX + "px") // sets the left attribute of the tooltip div to the mouse's current x position
+      .style("top", event.pageY + yTooltipOffset + "px"); // sets the top attribute of the tooltip div to the mouse's current y position + an offset defined above
+  };
+
+  // This code hides the tooltip when the mouse leaves the elements
+  const mouseleave3 = function (event, d) {
+    tooltip1.style("opacity", 0);
+  };
+
   let yScale = d3
     .scaleLinear() //creates a continuous scale
     .domain([0, maxY]) // specifies the range of the data
@@ -40,7 +58,7 @@ d3.csv("data/scatter.csv").then((data) => {
   svg3
     .append("g")
     .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(xScale).tickFormat((i) => data1[i].day)) // calls d3.axisLeft(yScale1) with g, creating a left axis using the yScale1 function defined above
+    .call(d3.axisBottom(xScale).tickFormat((i) => data[i].day)) // calls d3.axisLeft(yScale1) with g, creating a left axis using the yScale1 function defined above
     .attr("font-size", "20px");
 
   svg3
@@ -49,7 +67,10 @@ d3.csv("data/scatter.csv").then((data) => {
     .enter()
     .append("circle")
     .attr("class", "point")
-    .attr("cx", (d, i) => xScale(i))
+    .attr("cx", (d, i) => xScale(i) + margin.right)
     .attr("cy", (d) => yScale(d.score))
-    .attr("r", "10px");
+    .attr("r", "20px")
+    .on("mouseover", mouseover3)
+    .on("mousemove", mousemove3)
+    .on("mouseleave", mouseleave3);
 });
