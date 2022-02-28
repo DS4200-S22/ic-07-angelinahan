@@ -32,6 +32,18 @@ d3.csv("data/scatter.csv").then((data) => {
     .padding(0.1); //specifies the inner and outer padding around each band
 
   svg3
+    .append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .call(d3.axisLeft(yScale)) // calls d3.axisLeft(yScale1) with g, creating a left axis using the yScale1 function defined above
+    .attr("font-size", "20px"); // sets the font size of g to 20px
+
+  svg3
+    .append("g")
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(d3.axisBottom(xScale).tickFormat((i) => data1[i].day)) // calls d3.axisLeft(yScale1) with g, creating a left axis using the yScale1 function defined above
+    .attr("font-size", "20px");
+
+  svg3
     .selectAll(".point")
     .data(data)
     .enter()
