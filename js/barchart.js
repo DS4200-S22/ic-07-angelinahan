@@ -103,8 +103,8 @@ const mouseover1 = function (event, d) {
 // Moves the tooltip with the mouse
 const mousemove1 = function (event, d) {
   tooltip1 // uses tooltip (defined above)
-    .style("left", event.x + "px") // sets the left attribute of the tooltip div to the mouse's current x position
-    .style("top", event.y + yTooltipOffset + "px"); // sets the top attribute of the tooltip div to the mouse's current y position + an offset defined above
+    .style("left", event.pageX + "px") // sets the left attribute of the tooltip div to the mouse's current x position
+    .style("top", event.pageY + yTooltipOffset + "px"); // sets the top attribute of the tooltip div to the mouse's current y position + an offset defined above
 };
 
 // This code hides the tooltip when the mouse leaves the elements
